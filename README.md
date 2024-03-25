@@ -1,4 +1,17 @@
 # FDA
 code for "FDA: Attention Module for Multi-scale Feature Descriptions through Local and Global Fusions"
 
-Code is being organized and will be coming soon
+Single GPU Training
+```
+python train.py -c schedules/cifar_bs128.yaml -p /data/datasets -s cifar100 -a FDA -n resnet56 --device 0
+```
+
+DP Training
+```
+python train.py -c schedules/cifar_bs128.yaml -p /data/datasets -s cifar100 -a FDA -n resnet56
+```
+
+DDP Training
+```
+python -m torch.distributed.launch --nproc_per_node=8 --master_port 8888 train.py -c schedules/imagenet_bs32x8.yaml -p /data/datasets -s imagenet -a FDA -n ResNet50
+```
