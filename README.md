@@ -18,7 +18,7 @@ python -m torch.distributed.launch --nproc_per_node=8 --master_port 8888 train.p
 ```
 
 ## Our Environment
-python 3.8.16
-pytorch 1.12.1
-CUDA 11.1
-Ubuntu 22.04
+- python 3.8.16
+- pytorch 1.12.1
+- CUDA 11.1
+- Ubuntu 22.04
