@@ -1,5 +1,5 @@
 # FDA
-code for "FDA: Attention Module for Multi-scale Feature Descriptions through Local and Global Fusions"
+code for "Feature Description Attention: Channel-independent local–global fusion for multi-scale feature representation"
 
 ## RUN
 Single GPU Training
@@ -22,3 +22,5 @@ python -m torch.distributed.launch --nproc_per_node=8 --master_port 8888 train.p
 - pytorch 1.12.1
 - CUDA 11.1
 - Ubuntu 22.04
+
+
