@@ -21,3 +21,23 @@ class FDA(nn.Module):
         y = self.conv(y)
         y = self.sig(y).unsqueeze(-1)
         return x * y
+
+
+# Optimized in speed, mathematically equivalent to the original
+class FDA_Optimized(nn.Module):
+    def __init__(self, channels):
+        super(FDA_Optimized, self).__init__()
+        self.conv = nn.Conv1d(channels, channels, kernel_size=3, padding=0, groups=channels, bias=False)
+        self.sig = nn.Sigmoid()
+        self.bn = nn.BatchNorm1d(3)
+
+    def forward(self, x):
+        b, c, h, w = x.shape
+        y1 = x.mean(dim=(2, 3), keepdim=True)
+        y2 = x.view(b, c, -1).max(dim=2, keepdim=True)[0].view(b, c, 1, 1)
+        y5 = (x * (x > y1)).sum(dim=(2, 3), keepdim=True) / (h * w)
+        y = torch.cat([y1.flatten(2), y2.flatten(2), y5.flatten(2)], dim=2)
+        y = self.bn(y.transpose(1, 2)).transpose(1, 2)
+        y = self.conv(y)
+        y = self.sig(y).unsqueeze(-1)
+        return x * y
